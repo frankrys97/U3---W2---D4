@@ -39,6 +39,8 @@ const MyNavBar = () => {
       setPlaceholder("Search TV Shows");
     } else if (location.pathname === "/") {
       setPlaceholder("Search Movies");
+    } else {
+      setPlaceholder("Search");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
