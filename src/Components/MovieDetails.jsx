@@ -1,13 +1,22 @@
 import { useParams } from "react-router-dom";
 import MyNavBar from "./MyNavbar";
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import {
+  Alert,
+  Button,
+  Card,
+  Col,
+  Container,
+  ListGroup,
+  Row,
+} from "react-bootstrap";
 import CustomComment from "./CustomComment";
 
 const MovieDetails = (props) => {
   const params = useParams();
   const [movie, setMovie] = useState({});
   const [comments, setComments] = useState([]);
+  const [isError, setError] = useState(false);
 
   const movieUrl = ` http://www.omdbapi.com/?apikey=895d39b1&i=${params.movieId}`;
   const movieCommentsUrl = `https://striveschool-api.herokuapp.com/api/comments/${params.movieId}`;
@@ -52,6 +61,7 @@ const MovieDetails = (props) => {
       })
       .catch((error) => {
         console.log(error);
+        setError(true);
       });
   };
 
@@ -133,34 +143,50 @@ const MovieDetails = (props) => {
             </Card>
           </Col>
           <Col lg={9}>
-            <h2 className="text-white"> Comments:</h2>
-            <ListGroup as="ol" numbered className="my-3 commentList">
-              {comments.map((comment) => (
-                <ListGroup.Item
-                  key={comment._id}
-                  as="li"
-                  className="d-flex align-items-center justify-content-between gap-4"
-                >
-                  <p className="m-0" style={{ wordBreak: "break-all" }}>
-                    <strong>Comment:</strong> {comment.comment} -{" "}
-                    <strong>Rate:</strong>
-                    {comment.rate}
-                  </p>
+            {isError ? (
+              <Alert variant="danger">
+                Something went wrong with the API Comments
+              </Alert>
+            ) : (
+              <div>
+                <h2 className="text-white"> Comments:</h2>
+                {comments.length === 0 && (
+                  <Alert variant="warning">There are no comments yet</Alert>
+                )}
+                <ListGroup as="ol" className="my-3 commentList">
+                  {comments.map((comment, index) => (
+                    // {comments.length === 0 && (<p>There are no comments yet</p>)}
 
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={() => deleteComment(comment._id)}
-                  >
-                    <i className="bi bi-trash3"></i>
-                  </Button>
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-            <CustomComment
-              movieId={params.movieId}
-              fetchComments={fetchComments}
-            />
+                    <ListGroup.Item
+                      key={comment._id}
+                      as="li"
+                      className="d-flex align-items-center justify-content-between gap-3"
+                    >
+                      <div>
+                        <p className="m-0" style={{ wordBreak: "break-all" }}>
+                          {index + 1}. <strong>Comment: </strong>
+                          {comment.comment} -<strong> Rate: </strong>
+                          {comment.rate}
+                        </p>
+                      </div>
+                      <div>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => deleteComment(comment._id)}
+                        >
+                          <i className="bi bi-trash3"></i>
+                        </Button>
+                      </div>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+                <CustomComment
+                  movieId={params.movieId}
+                  fetchComments={fetchComments}
+                />
+              </div>
+            )}
           </Col>
         </Row>
       </Container>
