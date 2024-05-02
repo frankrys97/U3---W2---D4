@@ -1,0 +1,64 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+body {
+  background-color: #141414;
+}
+
+.custom-navbar {
+  background-color: #141414;
+  padding-top: 20px;
+}
+
+.custom-listGroupItem {
+  background-color: transparent !important;
+}
+
+.carousel-img {
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 1px solid rgba(128, 128, 128, 0.411);
+}
+
+Footer {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.custom-checkbox .form-check-input {
+  --bs-form-check-bg: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #494949;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.custom-checkbox .form-check-input:checked {
+  background-color: transparent;
+}
+
+.custom-anchor {
+  color: rgb(0, 166, 255);
+}
+
+.slider-item:hover {
+  cursor: pointer;
+  scale: 1.1;
+}
+
+.form-select {
+  border: 1px solid #727272aa;
+}
+
+/* .img-details {
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+} */
+
+.commentList {
+  max-height: 300px;
+  overflow-y: auto;
+}
